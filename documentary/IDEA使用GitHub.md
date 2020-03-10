@@ -63,3 +63,6 @@ https://blog.csdn.net/u012145252/article/details/80628451
    输入命令：git push git@github.com:github用户名/自定义项目名.git
 
 
+# IDEA Git 新建分支
+
+右下角点击Git:master(没创建时是主分支master), 然后 new branch
