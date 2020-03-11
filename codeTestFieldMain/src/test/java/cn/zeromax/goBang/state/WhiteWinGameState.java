@@ -1,0 +1,13 @@
+package cn.zeromax.goBang.state;
+
+public class WhiteWinGameState extends GoBangGameState {
+    @Override
+    public void move(int x, int y) {
+        System.out.println("白棋已经胜利，无法走棋");
+    }
+
+    @Override
+    public String toString() {
+        return "白棋胜利";
+    }
+}
