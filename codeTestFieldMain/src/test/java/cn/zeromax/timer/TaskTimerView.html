@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 引入 ECharts 文件 -->
+    <script src="../lib/echarts-4.6.0.js"></script>
+    <title>任务计时器显示器</title>
+</head>
+<body>
+<h1>任务计时器</h1>
+<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+<div id="main" style="width: 600px;height:400px;"></div>
+<script type="text/javascript">
+    var url = "taskTimer.json";
+    var request = new XMLHttpRequest();
+    var json;
+    request.open("get", url);
+    request.send(null);
+    request.onload = function () {
+        if (request.status == 200) {
+            json = JSON.parse(request.responseText);
+            console.log(json);
+            alert(JSON.stringify(json["timeMap"])); // 使用stringify才能输出json字符串，不然就是"[Object object]"
+            var legendData = [];
+            var seriesData = [];
+            for (var key in json["timeMap"]) {
+                legendData[legendData.length] = key;
+                console.log("存储：" + key);
+                seriesData[seriesData.length] = {value: json["timeMap"][key]["totalTime"], name: key};
+            }
+
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('main'));
+
+            // 指定图表的配置项和数据
+            var option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{a} <br/>{b}: {c} ({d}%)'
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 10,
+                    data: legendData
+                },
+                series: [
+                    {
+                        name: '任务名字',
+                        type: 'pie',
+                        radius: ['50%', '70%'],
+                        avoidLabelOverlap: false,
+                        label: {
+                            normal: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                show: true,
+                                textStyle: {
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
+                                }
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                show: false
+                            }
+                        },
+                        data: seriesData
+                    }
+                ]
+            };
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        }
+    };
+</script>
+</body>
+
+
+</html>
