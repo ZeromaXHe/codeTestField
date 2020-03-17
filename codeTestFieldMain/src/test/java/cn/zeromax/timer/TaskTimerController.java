@@ -16,7 +16,11 @@ public class TaskTimerController {
         if (file.exists()) {
             System.out.println("timertaskTimer.txt文件存在，读取内容：");
             json = FileUtil.readFile(filePath);
-            taskTimer = JSON.parseObject(json, new TypeReference<TaskTimer>(){});
+            taskTimer = JSON.parseObject(json, new TypeReference<TaskTimer>() {
+            });
+            if (taskTimer == null) {
+                taskTimer = new TaskTimer();
+            }
         } else {
             taskTimer = new TaskTimer();
             try {
@@ -28,21 +32,31 @@ public class TaskTimerController {
         }
     }
 
-    public void startTask(String taskName){
+    public void startTask(String taskName) {
         taskTimer.startTask(taskName);
     }
 
-    public void endTask(String taskName){
+    public void endTask(String taskName) {
         taskTimer.endTask(taskName);
     }
 
-    public void save(){
+    public void save() {
         json = JSON.toJSONString(taskTimer);
+        System.out.println("正在保存json: "+json+" 至path: "+filePath);
         FileUtil.writeToFile(filePath, json);
     }
 
     public static void main(String[] args) {
         TaskTimerController taskTimerController = new TaskTimerController();
-
+        taskTimerController.startTask("test");
+        try {
+            System.out.println("开始1s休眠");
+            Thread.sleep(1000);
+            System.out.println("结束休眠");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        taskTimerController.endTask("test");
+        taskTimerController.save();
     }
 }

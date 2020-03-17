@@ -1,6 +1,5 @@
 package cn.zeromax.timer;
 
-import java.io.*;
 import java.util.HashMap;
 
 /**
@@ -42,21 +41,22 @@ public class TaskTimer {
     public void startTask(String taskName) {
         if ("".equals(currentTask)) {
             startTime = System.currentTimeMillis();
+            currentTask = taskName;
         } else {
             System.out.println("已有任务正在进行，无法开始新的任务");
         }
     }
 
     public void endTask(String taskName) {
-        if (!"".equals(currentTask)) {
+        if (taskName != null && taskName.equals(currentTask)) {
             long endTime = System.currentTimeMillis();
-            if(timeMap.containsKey(currentTask)){
+            if (timeMap.containsKey(currentTask)) {
                 TaskTimeSchedule taskTimeSchedule = timeMap.get(currentTask);
-                taskTimeSchedule.addTaskTime(startTime,endTime);
-            }else{
-                timeMap.put(currentTask,new TaskTimeSchedule(startTime, endTime));
+                taskTimeSchedule.addTaskTime(startTime, endTime);
+            } else {
+                timeMap.put(currentTask, new TaskTimeSchedule(startTime, endTime));
             }
-        }else{
+        } else {
             System.out.println("当前无任务进行，无法停止");
         }
 
