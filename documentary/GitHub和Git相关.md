@@ -52,7 +52,7 @@ https://blog.csdn.net/u012145252/article/details/80628451
    git pull git@github.com:github用户名/repository名.git
 
    在这里可能会出现“fatal: refusing to merge unrelated histories”（拒绝合并不相关的历史），因为创建项目的时候勾选了生成README文件的话，会使得本地仓库和GitHub上的远程仓库实际上是独立的两个仓库。假如之前是直接clone的方式在本地建立起远程github仓库的克隆本地仓库就不会有这问题了
-   查阅了一下资料，发现可以在pull命令后紧接着使用`--allow-unrelated-history`选项来解决问题（该选项可以合并两个独立启动仓库的历史）。
+   查阅了一下资料，发现可以在pull命令后紧接着使用`--allow-unrelated-histories`(这里histories是复数，之前写错了)选项来解决问题（该选项可以合并两个独立启动仓库的历史）。
 
 6. 输入命令 `git add .`  add后面加了一个点，是想要提交所有文件，如果想提交指定的文件，可以写文件名，执行完增加命令后，要执行提交命令，如下：
 
